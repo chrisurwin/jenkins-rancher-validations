@@ -30,7 +30,8 @@ class RancherAgents(object):
                                     'AWS_SECURITY_GROUP_ID',
                                     'AWS_ZONE',
                                     'AWS_INSTANCE_PROFILE',
-                                    'RANCHER_AGENT_OPERATINGSYSTEM',
+                                    'RANCHER_AGENT_AMI',
+                                    'RANCHER_AGENT_SSHUSER',
                                     'RANCHER_ORCHESTRATION',
                                     'RANCHER_AGENT_AWS_INSTANCE_TYPE',
                                     'RANCHER_DOCKER_VERSION']
