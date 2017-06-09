@@ -722,7 +722,7 @@ def ec2_node_ensure(nodename, instance_type='m4.large'):
                         'NetworkInterfaces': network_ifs,
                         'IamInstanceProfile': iam_profile,
                     })
-            time.sleep(20)
+            time.sleep(40)
             log_debug("run request response for '{}'...".format(instance))
             log_debug("instance info: {}".format(instance['SpotInstanceRequests']))
 
@@ -730,7 +730,7 @@ def ec2_node_ensure(nodename, instance_type='m4.large'):
             log_info("instance-id of Rancher Server node: {}".format(instance_id))
 
             # we have to sleep for a bit before we start asking for node metadata
-            time.sleep(200)
+            time.sleep(20)
 
             tags = ec2_compute_tags(nodename)
             log_info("Tagging instance '{}' with tags: {}".format(instance_id, tags))
