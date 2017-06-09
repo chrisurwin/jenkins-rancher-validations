@@ -623,6 +623,7 @@ def ec2_node_ensure(nodename, instance_type='m4.large'):
     placement = {'AvailabilityZone': '{}{}'.format(region, zone)}
     subnetid = str(os.environ['AWS_SUBNET_ID']).rstrip()
     region = str(os.environ['AWS_DEFAULT_REGION']).rstrip()
+    server_os = str(os.environ['RANCHER_SERVER_OPERATINGSYSTEM']).rstrip()
 
     custom_vols = None
 
@@ -657,12 +658,12 @@ def ec2_node_ensure(nodename, instance_type='m4.large'):
             # yuck
             iam_profile = boto3.resource('iam').InstanceProfile(str(os.environ['AWS_INSTANCE_PROFILE']))
             iam_profile = {'Name': iam_profile.name}
+            server_os = str(os.environ['RANCHER_SERVER_OPERATINGSYSTEM']).rstrip()  
 
             # CoreOS is odd-ball in that it uses a different root volume
             if 'core' in server_os:
                 custom_vols = [{'DeviceName': '/dev/xvda', 'Ebs': {'VolumeSize': 30}}]
                 log_info("Setting custom root device '{}' for CoreOS...".format(custom_vols))
-
             # RHEL osfamily needs a second LVM volume for thinpool config
             if 'rhel' in server_os or 'centos' in server_os:
                 custom_vols = [{
