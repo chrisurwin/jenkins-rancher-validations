@@ -701,13 +701,13 @@ def ec2_node_ensure(nodename, instance_type='m4.large'):
                     InstanceCount=1,
                     Type='one-time',
                     LaunchSpecification={
-                        ImageId=os_settings['ami-id'],
-                        KeyName=keyname,
-                        InstanceType=instance_type,
-                        Placement=placement,
-                        NetworkInterfaces=network_ifs,
-                        IamInstanceProfile=iam_profile,
-                        BlockDeviceMappings=custom_vols
+                        'ImageId' : os_settings['ami-id'],
+                        'KeyName': keyname,
+                        'InstanceType': instance_type,
+                        'Placement': placement,
+                        'NetworkInterfaces': network_ifs,
+                        'IamInstanceProfile': iam_profile,
+                        'BlockDeviceMappings': custom_vols
                     })
                     
             else:
@@ -716,12 +716,12 @@ def ec2_node_ensure(nodename, instance_type='m4.large'):
                     InstanceCount=1,
                     Type='one-time',
                     LaunchSpecification={
-                        ImageId=os_settings['ami-id'],
-                        KeyName=keyname,
-                        InstanceType=instance_type,
-                        Placement=placement,
-                        NetworkInterfaces=network_ifs,
-                        IamInstanceProfile=iam_profile,
+                        'ImageId' : os_settings['ami-id'],
+                        'KeyName': keyname,
+                        'InstanceType': instance_type,
+                        'Placement': placement,
+                        'NetworkInterfaces': network_ifs,
+                        'IamInstanceProfile': iam_profile,
                     })
 
             log_debug("run request response for '{}'...".format(instance))
