@@ -63,7 +63,7 @@ class RancherAgents(object):
                         prefix = prefix.replace('.', '-')
                         n = "{}-".format(prefix)
 
-                n += "{}-{}-d{}-{}-agent".format(rancher_version, rancher_orch, docker_version, ami), 
+                n += "{}-{}-d{}-{}-agent".format(rancher_version, rancher_orch, docker_version, ami)
                 return n.rstrip()
 
         #
