@@ -696,26 +696,33 @@ def ec2_node_ensure(nodename, instance_type='m4.large'):
             # have to include block device mapping configs for these OSes and setting
             # the parameter to None makes the boto3 API unhappy. :\
             if 'rhel' in server_os or 'centos' in server_os or 'core' in server_os:
-                instance = ec2.run_instances(
-                    ImageId=os_settings['ami-id'],
-                    MinCount=1,
-                    MaxCount=1,
-                    KeyName=keyname,
-                    InstanceType=instance_type,
-                    Placement=placement,
-                    NetworkInterfaces=network_ifs,
-                    IamInstanceProfile=iam_profile,
-                    BlockDeviceMappings=custom_vols)
+                instance = ec2.request_spot_instances(
+                    SpotPrice='0.10',
+                    InstanceCount=1,
+                    Type='one-time'
+                    LaunchSpecification={
+                        ImageId=os_settings['ami-id'],
+                        KeyName=keyname,
+                        InstanceType=instance_type,
+                        Placement=placement,
+                        NetworkInterfaces=network_ifs,
+                        IamInstanceProfile=iam_profile,
+                        BlockDeviceMappings=custom_vols
+                    }
+                    
             else:
-                instance = ec2.run_instances(
-                    ImageId=os_settings['ami-id'],
-                    MinCount=1,
-                    MaxCount=1,
-                    KeyName=keyname,
-                    InstanceType=instance_type,
-                    Placement=placement,
-                    NetworkInterfaces=network_ifs,
-                    IamInstanceProfile=iam_profile)
+                instance = ec2.request_spot_instances(
+                    SpotPrice='0.10',
+                    InstanceCount=1,
+                    Type='one-time'
+                    LaunchSpecification={
+                        ImageId=os_settings['ami-id'],
+                        KeyName=keyname,
+                        InstanceType=instance_type,
+                        Placement=placement,
+                        NetworkInterfaces=network_ifs,
+                        IamInstanceProfile=iam_profile,
+                    }
 
             log_debug("run request response for '{}'...".format(instance))
             log_debug("instance info: {}".format(instance['Instances']))
