@@ -708,7 +708,7 @@ def ec2_node_ensure(nodename, instance_type='m4.large'):
                         NetworkInterfaces=network_ifs,
                         IamInstanceProfile=iam_profile,
                         BlockDeviceMappings=custom_vols
-                    }
+                    })
                     
             else:
                 instance = ec2.request_spot_instances(
@@ -722,7 +722,7 @@ def ec2_node_ensure(nodename, instance_type='m4.large'):
                         Placement=placement,
                         NetworkInterfaces=network_ifs,
                         IamInstanceProfile=iam_profile,
-                    }
+                    })
 
             log_debug("run request response for '{}'...".format(instance))
             log_debug("instance info: {}".format(instance['Instances']))
