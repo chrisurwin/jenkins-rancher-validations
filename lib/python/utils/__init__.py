@@ -723,7 +723,6 @@ def ec2_node_ensure(nodename, instance_type='m4.large'):
                         'IamInstanceProfile': iam_profile,
                     })
             time.sleep(20)
-                    
             log_debug("run request response for '{}'...".format(instance))
             log_debug("instance info: {}".format(instance['SpotInstanceRequests']))
 
