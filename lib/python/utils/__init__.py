@@ -217,7 +217,7 @@ def err_and_exit(msg):
 # FIXME: Have this reference a config file for easy addtl platform support.
 def os_to_settings(os):
     if 'ubuntu-1604' in os:
-        ami = 'ami-618fab04'
+        ami = 'ami-153e6470'
         ssh_username = 'ubuntu'
 
     elif 'ubuntu-1404' in os:
