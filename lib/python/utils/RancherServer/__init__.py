@@ -62,12 +62,13 @@ class RancherServer(object):
                 rancher_version = os.environ['RANCHER_VERSION'].replace('.', '')
                 docker_version = os.environ['RANCHER_DOCKER_VERSION'].replace('.', '').replace('~', '')
                 rancher_orch = os.environ['RANCHER_ORCHESTRATION']
+                ami = os.environ['RANCHER_SERVER_AMI']
 
                 if None is not prefix:
                         prefix = prefix.replace('.', '-')
                         n = "{}-".format(prefix)
 
-                n += "{}-{}-d{}-{}-server0".format(rancher_version, rancher_orch, docker_version)
+                n += "{}-{}-d{}-{}-server0".format(rancher_version, rancher_orch, docker_version, ami)
 
                 return n.rstrip()
 
