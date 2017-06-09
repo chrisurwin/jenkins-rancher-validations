@@ -616,7 +616,7 @@ def ec2_ensure_ssh_keypair(nodename):
 def ec2_node_ensure(nodename, instance_type='m4.large'):
     log_info("Ensuring node '{}'...".format(nodename))
 
-    os_settings = os_to_settings(server_os)
+    os_settings = os_to_settings("server")
     sgids = [str(os.environ['AWS_SECURITY_GROUP_ID']).rstrip()]
     zone = str(os.environ['AWS_ZONE']).rstrip()
     region = str(os.environ['AWS_DEFAULT_REGION']).rstrip()
