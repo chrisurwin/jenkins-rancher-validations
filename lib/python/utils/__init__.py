@@ -768,7 +768,7 @@ def ec2_node_ensure(nodename, instance_type='m4.large'):
 
 
 #
-def ec2_node_public_ip(nodename, region='us-west-2'):
+def ec2_node_public_ip(nodename, region):
 
     node_filter = [
         {'Name': 'tag:Name', 'Values': [nodename]},
