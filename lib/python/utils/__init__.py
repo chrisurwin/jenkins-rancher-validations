@@ -658,7 +658,7 @@ def ec2_node_ensure(nodename, instance_type='m4.large'):
             # yuck
             iam_profile = boto3.resource('iam').InstanceProfile(str(os.environ['AWS_INSTANCE_PROFILE']))
             iam_profile = {'Name': iam_profile.name}
-            server_os = str(os.environ['RANCHER_SERVER_OPERATINGSYSTEM']).rstrip()  
+            server_os = str(os.environ['RANCHER_SERVER_OPERATINGSYSTEM']).rstrip()
 
             # CoreOS is odd-ball in that it uses a different root volume
             if 'core' in server_os:
