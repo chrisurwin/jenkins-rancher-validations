@@ -215,34 +215,15 @@ def err_and_exit(msg):
 
 # Given the OS, return a dictionary of OS-specific setting values
 # FIXME: Have this reference a config file for easy addtl platform support.
-def os_to_settings(os):
-    if 'ubuntu-1604' in os:
-        ami = 'ami-153e6470'
-        ssh_username = 'ubuntu'
+def os_to_settings(type):
+    str(os.environ['RANCHER_SERVER_OPERATINGSYSTEM']).rstrip()
+    if 'server' in type:
+        ami = str(os.environ['RANCHER_SERVER_AMI']).rstrip()
+        ssh_username = str(os.environ['RANCHER_SERVER_SSHUSER']).rstrip()
 
-    elif 'ubuntu-1404' in os:
-        ami = 'ami-01f05461'
-        ssh_username = 'ubuntu'
-
-    elif 'centos-7' in os:
-        ami = 'ami-d2c924b2'
-        ssh_username = 'centos'
-
-    elif 'rhel-7' in os:
-        ami = 'ami-6f68cf0f'
-        ssh_username = 'ec2-user'
-
-    elif 'rhel-7.2' in os:
-        ami = 'ami-775e4f16'
-        ssh_username = 'ec2-user'
-
-    elif 'rancheros-v07' in os:
-        ami = 'ami-2c13934c'
-        ssh_username = 'rancher'
-
-    elif 'coreos-stable' in os:
-        ami = 'ami-06af7f66'
-        ssh_username = 'core'
+    elif 'agent' in os:
+        ami = str(os.environ['RANCHER_AGENT_AMI']).rstrip()
+        ssh_username = str(os.environ['RANCHER_AGENT_SSHUSER']).rstrip()
 
     else:
         raise RuntimeError("Unsupported OS specified '{}'!".format(os))

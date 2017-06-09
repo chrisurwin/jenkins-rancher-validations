@@ -60,14 +60,13 @@ class RancherServer(object):
                 prefix = os.environ.get('AWS_PREFIX')
                 rancher_version = os.environ['RANCHER_VERSION'].replace('.', '')
                 docker_version = os.environ['RANCHER_DOCKER_VERSION'].replace('.', '').replace('~', '')
-                rancher_server_os = os.environ['RANCHER_SERVER_OPERATINGSYSTEM']
                 rancher_orch = os.environ['RANCHER_ORCHESTRATION']
 
                 if None is not prefix:
                         prefix = prefix.replace('.', '-')
                         n = "{}-".format(prefix)
 
-                n += "{}-{}-d{}-{}-server0".format(rancher_version, rancher_orch, docker_version, rancher_server_os)
+                n += "{}-{}-d{}-{}-server0".format(rancher_version, rancher_orch, docker_version)
 
                 return n.rstrip()
 
@@ -170,8 +169,7 @@ class RancherServer(object):
         #
         def __install_server_container(self):
                 rancher_version = str(os.environ['RANCHER_VERSION']).rstrip()
-                server_os = str(os.environ['RANCHER_SERVER_OPERATINGSYSTEM']).rstrip()
-                os_settings = os_to_settings(server_os)
+                os_settings = os_to_settings("server")
 
                 log_info('Deploying rancher/server:{}...'.format(rancher_version))
 
@@ -191,9 +189,7 @@ class RancherServer(object):
                 log_info("Installing Docker version '{}'...".format(docker_version))
 
                 try:
-                        server_os = str(os.environ['RANCHER_SERVER_OPERATINGSYSTEM']).rstrip()
-                        os_settings = os_to_settings(server_os)
-
+                        os_settings = os_to_settings("server")
                         SCP(self.name(),
                             self.IP(),
                             os_settings['ssh_username'],
@@ -216,8 +212,7 @@ class RancherServer(object):
         #
         def provision(self):
                 try:
-                        server_os = str(os.environ['RANCHER_SERVER_OPERATINGSYSTEM']).rstrip()
-                        os_settings = os_to_settings(server_os)
+                        os_settings = os_to_settings("server")
                         region = str(os.environ['AWS_DEFAULT_REGION']).rstrip()
                         ssh_user = os_settings['ssh_username']
 
@@ -228,7 +223,6 @@ class RancherServer(object):
                         SSH(self.name(), node_addr, ssh_user, 'chmod +x /tmp/*.sh && /tmp/rancher_ci_bootstrap.sh')
 
 #                        # CoreOS and RancherOS ship w/ vendored Docker engine
-#                        if 'rancher' not in server_os and 'core' not in server_os:
 #                               self.__docker_install()
 
                         self.__install_server_container()

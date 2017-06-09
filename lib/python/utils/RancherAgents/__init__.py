@@ -55,14 +55,13 @@ class RancherAgents(object):
                 prefix = os.environ.get('AWS_PREFIX')
                 rancher_version = os.environ['RANCHER_VERSION'].replace('.', '')
                 docker_version = os.environ['RANCHER_DOCKER_VERSION'].replace('.', '').replace('~', '')
-                rancher_agent_os = os.environ['RANCHER_AGENT_OPERATINGSYSTEM']
                 rancher_orch = os.environ['RANCHER_ORCHESTRATION']
 
                 if None is not prefix:
                         prefix = prefix.replace('.', '-')
                         n = "{}-".format(prefix)
 
-                n += "{}-{}-d{}-{}-agent".format(rancher_version, rancher_orch, docker_version, rancher_agent_os)
+                n += "{}-{}-d{}-{}-agent".format(rancher_version, rancher_orch, docker_version)
                 return n.rstrip()
 
         #
@@ -136,8 +135,7 @@ class RancherAgents(object):
         #
         def __install_docker(self, agentname):
                 region = str(os.environ['AWS_DEFAULT_REGION']).rstrip()
-                agent_os = str(os.environ['RANCHER_AGENT_OPERATINGSYSTEM']).rstrip()
-                os_settings = os_to_settings(agent_os)
+                os_settings = os_to_settings("agent")
                 ssh_user = os_settings['ssh_username']
 
                 try:
@@ -175,8 +173,7 @@ class RancherAgents(object):
                 log_info("Deploying Rancher Agent container...")
 
                 region = str(os.environ['AWS_DEFAULT_REGION']).rstrip()
-                agent_os = str(os.environ['RANCHER_AGENT_OPERATINGSYSTEM']).rstrip()
-                os_settings = os_to_settings(agent_os)
+                os_settings = os_to_settings("agent")
                 ssh_user = os_settings['ssh_username']
                 agent_prefix = self.__agent_name_prefix()
 
