@@ -215,13 +215,12 @@ def err_and_exit(msg):
 
 # Given the OS, return a dictionary of OS-specific setting values
 # FIXME: Have this reference a config file for easy addtl platform support.
-def os_to_settings(type):
-    str(os.environ['RANCHER_SERVER_OPERATINGSYSTEM']).rstrip()
-    if 'server' in type:
+def os_to_settings(nodetype):
+    if 'server' in nodetype:
         ami = str(os.environ['RANCHER_SERVER_AMI']).rstrip()
         ssh_username = str(os.environ['RANCHER_SERVER_SSHUSER']).rstrip()
 
-    elif 'agent' in os:
+    elif 'agent' in nodetype:
         ami = str(os.environ['RANCHER_AGENT_AMI']).rstrip()
         ssh_username = str(os.environ['RANCHER_AGENT_SSHUSER']).rstrip()
 
@@ -617,7 +616,6 @@ def ec2_ensure_ssh_keypair(nodename):
 def ec2_node_ensure(nodename, instance_type='m4.large'):
     log_info("Ensuring node '{}'...".format(nodename))
 
-    server_os = str(os.environ['RANCHER_SERVER_OPERATINGSYSTEM']).rstrip()
     os_settings = os_to_settings(server_os)
     sgids = [str(os.environ['AWS_SECURITY_GROUP_ID']).rstrip()]
     zone = str(os.environ['AWS_ZONE']).rstrip()
