@@ -746,6 +746,7 @@ def ec2_node_ensure(nodename, instance_type='m4.large'):
                 Tags=tags)
 
         # waiting for 'running' is the easiest way to eliminate race conditions later
+        log_info("Region:".format(region))
         log_info("Waiting for node to enter state 'running'...")
         ec2_wait_for_state(instance_id, 'running')
 
