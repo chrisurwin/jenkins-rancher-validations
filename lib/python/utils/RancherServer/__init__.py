@@ -222,7 +222,7 @@ class RancherServer(object):
                         ssh_user = os_settings['ssh_username']
 
                         ec2_node_ensure(self.name(), instance_type=os.environ.get('RANCHER_SERVER_AWS_INSTANCE_TYPE'))
-                        node_addr = ec2_node_public_ip(self.name(), region=region)
+                        node_addr = ec2_node_public_ip(self.name(), region)
 
                         SCP(self.name(), node_addr, ssh_user, './lib/bash/*.sh', '/tmp/')
                         SSH(self.name(), node_addr, ssh_user, 'chmod +x /tmp/*.sh && /tmp/rancher_ci_bootstrap.sh')
@@ -245,7 +245,7 @@ class RancherServer(object):
                                 f.write("http://{}:8080".format(self.IP()))
                                 f.close()
 
-                        public_ip = ec2_node_public_ip(self.name())
+                        public_ip = ec2_node_public_ip(self.name(), region)
                         log_info("Rancher Server will be available at 'http://{}:8080' shortly...".format(public_ip))
 
                 except RuntimeError as e:

@@ -141,7 +141,7 @@ class RancherAgents(object):
                 ssh_user = os_settings['ssh_username']
 
                 try:
-                        addr = ec2_node_public_ip(agentname, region=region)
+                        addr = ec2_node_public_ip(agentname, region)
 
                         SCP(agentname, addr, ssh_user, './lib/bash/*.sh', '/tmp/')
                         SSH(agentname, addr, ssh_user, 'chmod +x /tmp/*.sh && /tmp/rancher_ci_bootstrap.sh')
@@ -185,7 +185,7 @@ class RancherAgents(object):
 
                         for agent in range(0, 3):
                                 agent_name = agent_prefix + str(agent)
-                                addr = ec2_node_public_ip(agent_name, region=region)
+                                addr = ec2_node_public_ip(agent_name, region)
                                 SSH(agent_name, addr, ssh_user, reg_command)
 
                 except (RancherServerError, SSHError) as e:
