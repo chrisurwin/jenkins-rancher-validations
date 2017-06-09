@@ -723,9 +723,9 @@ def ec2_node_ensure(nodename, instance_type='m4.large'):
                         'IamInstanceProfile': iam_profile,
                     })
             log_debug("run request response for '{}'...".format(instance))
-            log_debug("instance info: {}".format(instance['Instances']))
+            log_debug("instance info: {}".format(instance['SpotInstanceRequests']))
 
-            instance_id = instance['Instances'][0]['InstanceId']
+            instance_id = instance['SpotInstanceRequests'][0]['InstanceId']
             log_info("instance-id of Rancher Server node: {}".format(instance_id))
 
             # we have to sleep for a bit before we start asking for node metadata
